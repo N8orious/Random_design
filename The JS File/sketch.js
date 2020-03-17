@@ -1,60 +1,26 @@
-let origin;
-let bob;
-let len;
-let angle = 0.785;
-let avel = 0;
-let aacc = 0;
-let secorigin;
-let secbob;
-let seclen;
-let r;
-let sangle = 0.62;
-let savel = 0;
-let saacc = 0;
-
+var len = 500;
 
 function setup() {
-  createCanvas(400, 400);
-  r = 30;
-  len = 250;
-  origin = createVector(width/2, 0);
-  bob = createVector(width/2, len);
-  
-  seclen = 80;
-  secorigin = createVector(width/2, len);
-  secbob = createVector(width/2, len+seclen);
+  createCanvas(540, 540);
+  noStroke();
+  fill(50);
 }
 
 function draw() {
-  background(220);
-  
-  bob.x = origin.x + len * sin(angle);
-  bob.y = origin.y + len * cos(angle);
-  
-  secbob.x = secorigin.x + seclen * sin(sangle);
-  secbob.y = secorigin.y + seclen * cos(sangle);
-  
-  
-  line(origin.x, origin.y, bob.x, bob.y);
-  fill(0);
-  ellipse(bob.x, bob.y, r, r);
-  
-  line(bob.x, bob.y, secbob.x, secbob.y);
-  ellipse(secbob.x, secbob.y, r, r);
-  
-  aacc = -1/len * sin(angle);
-  
-  angle+= avel;
-  avel += aacc;
-  
-  avel *= 0.99;
-  
-  saacc = -1/seclen * sin(sangle);
-  
-  sangle+= savel;
-  savel += saacc;
-  
-  savel *= 0.99;
-  
-  
+  background(255);
+  divide(width / 2 - len / 2, height / 2 + len * sqrt(3) / 4, len, 1, 5);
+}
+
+function divide(x, y, l, lvl, max) {
+  if (lvl == max) {
+    tri(x, y, l);
+  } else {
+    divide(x, y, l / 2, lvl + 1, max);
+    divide(x + l / 2, y, l / 2, lvl + 1, max);
+    divide(x + l / 4, y - l * sqrt(3) / 4, l / 2, lvl + 1, max);
+  }
+}
+
+function tri(x, y, l) {
+  triangle(x, y, x + l / 2, y - l * sqrt(3) / 2, x + l, y);
 }
